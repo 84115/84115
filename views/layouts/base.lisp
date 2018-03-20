@@ -31,4 +31,4 @@
           (:p "MIT Licensed | &copy;"))))
 
       (:script :src "/js/main.js")
-      (:script :src "/js/highlight-lisp.js"))))
+      (:script :src "/js/highlight-lisp.min.js"))))
