@@ -9,6 +9,6 @@ My personal development portfolio built ontop of Wookie (Common Lisp HTTP Server
 
 ## Setup
 0. Load Quicklisp
-0. (load "/home/dev/quicklisp/local-projects/eight/start.lisp")
+0. (load "~/quicklisp/local-projects/eight/start.lisp")
 0. Serve
 0. Fin
