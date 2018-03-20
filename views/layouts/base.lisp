@@ -6,10 +6,10 @@
       (:title (str (conc (getf data :title) " | James Ball")))
       (:link :rel "stylesheet" :href "/css/template.css?2")
       (:link :rel "shortcut icon" :href "/favicon.png" :type "image/png")
-      (:script :src "/js/wookie.js")
+      (:script :src "/js/main.js")
       ;; syntax highlighting
-      (:link :rel "stylesheet" :href "/js/highlight-lisp/themes/wookie.css" :id "hl-style")
-      (:script :src "/js/highlight-lisp/highlight-lisp.js"))
+      (:link :rel "stylesheet" :href "/css/highlight-lisp-theme.css" :id "hl-style")
+      (:script :src "/js/highlight-lisp.js"))
     (:body :class (getf data :body-class)
       (:div :id "container"
         (:header
