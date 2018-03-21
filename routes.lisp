@@ -23,24 +23,13 @@
 (defroute (:get "/best-practices") (req res)
   (send-response res :status 301 :headers '(:location "/docs/best-practices") :body "moved <a href=\"/docs/best-practices\">here</a>"))
 
-(defroute (:get "/faq") (req res)
-  (let ((body (load-view :pages/faq)))
-    (send-response res :headers '(:content-type "text/html") :body body)))
-
 (defroute (:get "/about") (req res)
   (let ((body (load-view :pages/about)))
-    (send-response res :headers '(:content-type "text/html") :body body)))
-
-(defroute (:get "/apps") (req res)
-  (let ((body (load-view :pages/apps :data '(:body-class "apps"))))
     (send-response res :headers '(:content-type "text/html") :body body)))
 
 (defroute (:get "/refresh-views") (req res)
   (load-views)
   (send-response res :body "Views refreshed!!"))
-
-(defroute (:get "/favicon.ico") (req res)
-  (send-response res :status 301 :headers '(:location "/favicon.png")))
 
 (def-directory-route "/" (format nil "~aassets" *root*) :disable-directory-listing nil)
 
