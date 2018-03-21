@@ -7,6 +7,12 @@
                  :body (layout 'default (list :content "Page not found."
                                               :title "Page not found."))))
 
+(defun page-hit (res)
+  "Great Success"
+  (send-response res
+                 :body (layout 'default (list :content "HIT"
+                                              :title "HIT"))))
+
 ;; clear out all routes (start anew)
 (clear-routes)
 
@@ -47,6 +53,9 @@
       (page-not-found res))
     (error (e)
       (send-response res :status 500 :body (format nil "~a" e)))))
+
+(defroute (:get "/blog(/(\d{4}/\d{2}/\d{2}/.*))?") (req res args)
+  (page-hit res))
 
 (defroute (:* ".+") (req res)
   (page-not-found res))

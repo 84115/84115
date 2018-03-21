@@ -1,7 +1,12 @@
 /**
  * Inspired by highlight.js's "Tomorrow night" theme
  */
-pre { white-space: pre; background-color: #1d1f21; border: 0px solid #ccc; font-size: 13px; line-height: 19px; overflow: auto; padding: 6px 10px; border-radius: 3px; }
+pre {
+	/*box-shadow: inset 0 1px 10px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.1), 0 -1px 0 rgba(0,0,0,0.5);*/
+	white-space: pre; background-color: #0c0c0c; border: 0px solid #ccc; font-size: 13px; line-height: 19px; overflow: auto; padding: 14px; border-radius: 2px; }
+
+pre code { font-weight: normal; }
+
 pre code.hl-highlighted {white-space: pre; margin: 0; padding: 0; background: none; border: none; overflow-x: auto; font-size: 13px;}
 code.hl-highlighted {margin: 0 2px; padding: 0 5px; white-space: nowrap; font-family: Consolas, "Liberation Mono", Courier, monospace; border: 1px solid #eaeaea; border-radius: 3px;}
 
