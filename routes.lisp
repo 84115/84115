@@ -27,9 +27,9 @@
   (let ((body (load-view :pages/about)))
     (send-response res :headers '(:content-type "text/html") :body body)))
 
-(defroute (:get "/refresh-views") (req res)
+(defroute (:get "/cache") (req res)
   (load-views)
-  (send-response res :body "Views refreshed!!"))
+  (send-response res :body "Cache cleared."))
 
 (def-directory-route "/" (format nil "~aassets" *root*) :disable-directory-listing nil)
 

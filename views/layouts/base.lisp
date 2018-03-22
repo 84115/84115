@@ -25,10 +25,11 @@
         (str (getf data :content))
         
         (:footer
-          (:ul
-            (:li (:a :href "/sitemap" "Sitemap"))
-            (:li (:a :href "https://github.com/84115/84115" "Github"))
-          (:p "MIT Licensed | &copy;"))))
+          (:div :class "footer-container"
+            (:ul
+              (:li (:a :href "/sitemap" "Sitemap"))
+              (:li (:a :href "https://github.com/84115" "Github")))
+            (:p "MIT Licensed | &copy; James Ball | " (:a :href "https://github.com/84115/84115" "Source Code")))))
 
       (:script :src "/js/main.js")
       (:script :src "/js/highlight-lisp.min.js"))))
