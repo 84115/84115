@@ -29,7 +29,7 @@
 
 (defroute (:get "/cache") (req res)
   (load-views)
-  (send-response res :body "Cache cleared."))
+  (send-response res :headers '(:content-type "text/html") :body "Cache cleared.<script>window.history.back()</script>"))
 
 (def-directory-route "/" (format nil "~aassets" *root*) :disable-directory-listing nil)
 
