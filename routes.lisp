@@ -13,6 +13,17 @@
                  :body (layout 'default (list :content "HIT"
                                               :title "HIT"))))
 
+(defun scrub-directory (dir req res args)
+  "doc-string"
+  (handler-case
+    (let* ((view (intern (string-upcase (format nil (concatenate 'string dir "/~a") (or (cadr args) "index"))) :keyword))
+           (content (load-view view)))
+      (send-response res :headers '(:content-type "text/html") :body content))
+    (view-not-found ()
+      (page-not-found res))
+    (error (e)
+      (send-response res :status 500 :body (format nil "~a" e)))))
+
 ;; clear out all routes (start anew)
 (clear-routes)
 
@@ -34,17 +45,14 @@
 (def-directory-route "/" (format nil "~aassets" *root*) :disable-directory-listing nil)
 
 (defroute (:get "/docs(/(.*))?") (req res args)
-  (handler-case
-    (let* ((view (intern (string-upcase (format nil "docs/~a" (or (cadr args) "index"))) :keyword))
-           (content (load-view view)))
-      (send-response res :headers '(:content-type "text/html") :body content))
-    (view-not-found ()
-      (page-not-found res))
-    (error (e)
-      (send-response res :status 500 :body (format nil "~a" e)))))
+  (scrub-directory "docs" req res args))
 
-(defroute (:get "/blog(/(\d{4}/\d{2}/\d{2}/.*))?") (req res args)
-  (page-hit res))
+(defroute (:get "/portfolio(/(.*))?") (req res args)
+  (scrub-directory "portfolio" req res args))
+
+; (defroute (:get "/blog(/\d{4}/\d{2}/\d{2}/(.*))?") (req res args)
+(defroute (:get "/blog(/(.*))?") (req res args)
+  (scrub-directory "blog" req res args))
 
 (defroute (:* ".+") (req res)
   (page-not-found res))
