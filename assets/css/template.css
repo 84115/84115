@@ -489,3 +489,167 @@ body.apps content ul li img:first-child {
   float: left;
   margin: 3px 6px 0 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+  body {
+    margin: 0 auto;
+    background: #262727;
+  }
+  .container {
+    width: 100%;
+    padding: 10px;
+  }
+  .section {
+    width: 100%;
+    float: left;
+    line-height: 0;
+    transition: width 0.2s;
+    position: relative;
+    padding: 10px;
+  }
+  .section img {
+    width: 100%;
+  }
+
+  .caption {
+    background: #0c0c0c;
+    /*width: 100%;*/
+    width: calc(100% - 20px);
+    display: block;
+    position: absolute;
+    /*height: 100%;*/
+    height: calc(100% - 20px);
+    top: 10px;
+    left: 10px;
+    right: 0;
+    bottom: 0;
+    line-height: 1;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    opacity: 0;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    padding: 14px;
+  }
+
+  .section:hover .caption {
+    opacity: 0.825;
+  }
+
+  .section .title,
+  .section .sub {
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+  }
+
+  .section .title {
+    /*margin-top: 25%;*/
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .section .sub {
+    margin-top: 8px;
+    font-size: 12px;
+  }
+
+  /* https://scotch.io/tutorials/default-sizes-for-twitter-bootstraps-media-queries */
+
+  /* Custom, iPhone Retina */ 
+  @media (min-width : 320px) {
+    .section { width: 100%; }
+  }
+
+  /* Extra Small Devices, Phones */ 
+  @media (min-width : 480px) {
+    .section { width: 50%; }
+  }
+
+  /* Small Devices, Tablets */
+  @media (min-width : 768px) {
+    .section { width: 33.333%; }
+  }
+
+  /* Medium Devices, Desktops */
+  @media (min-width : 992px) {
+    .section { width: 25%; }
+  }
+
+  /* Large Devices, Wide Screens */
+  @media (min-width : 1200px) {
+    .section { width: 20%; }
+  }
+
+  @media (min-width : 1400px) {
+    .section { width: 16.666%; }
+  }
+
+  .section-gb img,
+  .section-gb .caption {
+    background-color: #000;
+  }
+
+  .section-roxoa img,
+  .section-roxoa .caption {
+    background-color: #d0112b;
+  }
+
+  .section-qp img,
+  .section-qp .caption {
+    background-color: #925ba8;
+  }
+
+  .section-ias img,
+  .section-ias .caption {
+    background-color: #26a3cc;
+  }
+
+  .section-watchtag img,
+  .section-watchtag .caption {
+    background-color: #ec6737;
+  }
+
+  .section-frog img,
+  .section-frog .caption {
+    background-color: #246fb8;
+  }
+
+  .section-giftedjewelry img,
+  .section-giftedjewelry .caption {
+    background-color: #dfaec7;
+  }
