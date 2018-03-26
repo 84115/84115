@@ -532,18 +532,18 @@ html {
   }
   .container {
     width: 100%;
-    padding: 10px;
   }
   .section {
     width: 100%;
     float: left;
     line-height: 0;
-    transition: width 0.2s;
+    /*transition: width 0.2s;*/
     position: relative;
     padding: 10px;
   }
   .section img {
     width: 100%;
+    border-radius: 4px;
   }
 
   .caption {
@@ -566,6 +566,7 @@ html {
     cursor: pointer;
     transition: opacity 0.2s;
     padding: 14px;
+    border-radius: 4px;
   }
 
   .section:hover .caption {
@@ -591,33 +592,82 @@ html {
   /* https://scotch.io/tutorials/default-sizes-for-twitter-bootstraps-media-queries */
 
   /* Custom, iPhone Retina */ 
-  @media (min-width : 320px) {
+  @media (min-width: 320px) {
     .section { width: 100%; }
   }
 
   /* Extra Small Devices, Phones */ 
-  @media (min-width : 480px) {
+  @media (min-width: 480px) {
     .section { width: 50%; }
   }
 
   /* Small Devices, Tablets */
-  @media (min-width : 768px) {
+  @media (min-width: 768px) {
     .section { width: 33.333%; }
   }
 
   /* Medium Devices, Desktops */
-  @media (min-width : 992px) {
+  @media (min-width: 992px) {
     .section { width: 25%; }
   }
 
   /* Large Devices, Wide Screens */
-  @media (min-width : 1200px) {
+  @media (min-width: 1200px) {
     .section { width: 20%; }
   }
 
-  @media (min-width : 1400px) {
+  /*@media (min-width: 1400px) {
     .section { width: 16.666%; }
+  }*/
+
+
+
+
+
+
+  @media (max-width: 768px) {
+    header h1 {
+      float: right;
+    }
+    nav {
+      float: left;
+      background-color: red;
+      position: fixed;
+    }
+    nav ul li:first-child a {
+      padding-left: 8px;
+    }
+    nav ul li {
+      display: block;
+      float: none;
+    }
+
+    header label {
+      padding: 13px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #fff;
+      background: #060606;
+      border-right: 1px solid #333;
+    }
+
+    input#menu {
+      display: none;
+    }
+
+    input#menu ~ nav {
+      display: none;
+    }
+
+    input#menu:checked ~ nav {
+      display: block;
+    }
   }
+
+
+
+
+
 
   .section-gb img,
   .section-gb .caption {

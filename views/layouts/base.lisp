@@ -4,6 +4,7 @@
   (:html
     (:head
       (:title (str (conc (getf data :title) " | James Ball")))
+      (:meta :name "viewport" :content "width=device-width, initial-scale=1")
       (:link :rel "stylesheet" :href "/css/template.css")
       (:link :rel "shortcut icon" :href "/favicon.png" :type "image/png")
       (:link :rel "stylesheet" :href "/css/highlight-lisp-theme.css" :id "hl-style"))
@@ -13,6 +14,8 @@
         (:header
           (:div :class "inner"
             (:h1 (:a :href "/" "james-ball.co.uk"))
+            (:input :type "checkbox" :id "menu")
+            (:label :for "menu" "Menu")
             (:nav
               (:ul
                 (:li (:a :href "/portfolio" "Portfolio"))
