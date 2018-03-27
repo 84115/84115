@@ -5,7 +5,7 @@ layout: portfolio
 
 # Porfolio
 
-<div class="container">
+<div class="container" style="padding: 0 15px">
 	<div class="section">
 		<img src="/images/portfolio/james-ball.jpg">
 		<div class="caption">
