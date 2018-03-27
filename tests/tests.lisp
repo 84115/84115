@@ -1,4 +1,4 @@
-; (load "~/quicklisp/local-projects/eight/tests/tests.lisp")
+; (load "~/test.lisp")
 
 ; (format t "~c[31mRED~c[0m~%" #\ESC #\ESC)
 ; (format t "~c[32mGREEN~c[0m~%" #\ESC #\ESC)
@@ -6,38 +6,67 @@
 ; (format t "~c[35mPURPLE~c[0m~%" #\ESC #\ESC)
 ; (format t "~c[36mTEAL~c[0m~%" #\ESC #\ESC)
 
-; (format t "~c[31mFAILURE: {test-name}~c[0m~%" #\ESC #\ESC)
-; (format t "~c[32mSUCCESS: {test-name}~c[0m~%" #\ESC #\ESC)
-
-
-(defun print-success (str)
-  (format t (concatenate 'string "~c[32mSUCCESS: " str "~c[0m~%") #\ESC #\ESC))
+(defparameter *test-count-pass* 0)
+(defparameter *test-count-fail* 0)
+(defparameter *term-color-default* "~c[0m~%")
 
 (defun defsuite (str)
-  (format t (concatenate 'string "~%~C[34m" str "~c[0m~%") #\ESC #\ESC)
-  ; (format t "~C[34m~v@{~A~:*~}~c[0m~%" (length "Eight Test Suite") "=" #\ESC #\ESC)
-  (format t "~C[34m================~c[0m~%~%" #\ESC #\ESC))
+  (terpri)
+  (format t (concatenate 'string "~C[34m" str "~c[0m") #\ESC #\ESC)
+  (terpri)
+  (format t "~C[34m" #\ESC)
+  (format t "~v@{~A~:*~}" (length str) "=")
+  (format t "~c[0m" #\ESC)
+  (terpri)
+  (terpri))
+
+(defun print-util (prefix str postfix)
+  (format t (concatenate 'string prefix str postfix) #\ESC #\ESC))
+
+(defun print-label (str)
+  (print-util "~c[35mSHOULD: " str *term-color-default*))
+
+(defun print-pass (str)
+  (print-util "~c[32mPASS: " str *term-color-default*))
+
+(defun print-fail (str)
+  (print-util "~c[31mFAIL: " str *term-color-default*))
+
+(defun ok (boolean message)
+  (if boolean
+      (progn
+        (setq *test-count-pass* (incf *test-count-pass*))
+        (print-pass message))
+      (progn
+        (setq *test-count-fail* (incf *test-count-fail*))
+        (print-fail message))))
+
+(defun fin ()
+  (write-line (concatenate 'string "PASS COUNT: " (write-to-string *test-count-pass*)))
+  (write-line (concatenate 'string "FAIL COUNT: " (write-to-string *test-count-fail*)))
+  (write-line (concatenate 'string "TEST COUNT: " (write-to-string (+ *test-count-pass* *test-count-fail*)))))
 
 (defmacro deftest (name vars &rest body)
   "..."
-  ; MODIFY GLOBAL COUNTER...
-  (print-success name)
+  (print-label name)
   `(let (,@vars)
-    (progn ,@body)))
-
-
+    (progn ,@body)
+    (terpri)))
 
 (defsuite "Eight Test Suite")
 
 (deftest "T equals T"
          ((p T))
-         (assert (equalp T p) (p)))
+         (ok (equalp T p) "T equals T"))
 
 (deftest "nil equals nil"
          ((p nil))
-         (assert (equalp nil p) (p)))
+         (ok (equalp nil p) "nil equals nil"))
 
-(deftest "x is integer and equals 42"
+(deftest "x is an integer and equals 42"
          ((x 42))
-         (assert (integerp x) (x))
-         (assert (= 42 x) (x)))
+         (ok (integerp x) "x is an integer")
+         (ok (= 42 x) "x equals 42"))
+
+(fin)
+
