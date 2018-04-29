@@ -1,28 +1,25 @@
 (in-package :eight)
 
-(defun page-not-found (res)
-  "Sends a 404 error."
+(defun http-status (&optional (status 500) (res) (e "..."))
   (send-response res
-                 :status 404
-                 :body (layout 'default (list :content "Page not found."
-                                              :title "Page not found."))))
+                 :status status
+                 :body (layout 'default (list
+                                          :content (format nil "~a" e)
+                                          :title (format nil "HTTP - ~a" status)))))
 
-(defun page-hit (res)
-  "Great Success"
-  (send-response res
-                 :body (layout 'default (list :content "HIT"
-                                              :title "HIT"))))
+(defun defroutescan (dir)
+  (defroute (:get (format nil "/~a(/(.*))?" dir)) (req res args)
+    (handler-case
+        (let* ((view (intern (string-upcase (format nil (concatenate 'string dir "/~a") (or (cadr args) "index"))) :keyword))
+               (content (load-view view)))
+               (send-response res :headers '(:content-type "text/html") :body content))
+        (view-not-found ()
+                        (http-status 404 res))
+        (error (e)
+               (http-status 500 res e)))))
 
-(defun scrub-directory (dir req res args)
-  "doc-string"
-  (handler-case
-    (let* ((view (intern (string-upcase (format nil (concatenate 'string dir "/~a") (or (cadr args) "index"))) :keyword))
-           (content (load-view view)))
-      (send-response res :headers '(:content-type "text/html") :body content))
-    (view-not-found ()
-      (page-not-found res))
-    (error (e)
-      (send-response res :status 500 :body (format nil "~a" e)))))
+
+
 
 ;; clear out all routes (start anew)
 (clear-routes)
@@ -31,28 +28,24 @@
   (let ((body (load-view :pages/index)))
     (send-response res :headers '(:content-type "text/html") :body body)))
 
-(defroute (:get "/best-practices") (req res)
-  (send-response res :status 301 :headers '(:location "/docs/best-practices") :body "moved <a href=\"/docs/best-practices\">here</a>"))
+(def-directory-route "/" (format nil "~aassets" *root*) :disable-directory-listing nil)
 
 (defroute (:get "/about") (req res)
   (let ((body (load-view :pages/about)))
     (send-response res :headers '(:content-type "text/html") :body body)))
 
-(defroute (:get "/cache") (req res)
+(defroute (:* "/http/([0-9]+)") (req res args)
+  (http-status (parse-integer (car args)) res))
+
+(defroute (:* "/cache") (req res)
   (load-views)
-  (send-response res :headers '(:content-type "text/html") :body "Cache cleared.<script>window.history.back()</script>"))
+  (send-response res
+                 :headers '(:content-type "text/html")
+                 :body "<!DOCTYPE html><html><head><title>Clearing Cache...</title><meta http-equiv='cache-control' content='no-cache'><meta http-equiv='expires' content='0'><meta http-equiv='pragma' content='no-cache'></head><body><h1>Clearing Cache...</h1><script>window.history.back()</script></body></html>"))
 
-(def-directory-route "/" (format nil "~aassets" *root*) :disable-directory-listing nil)
-
-(defroute (:get "/docs(/(.*))?") (req res args)
-  (scrub-directory "docs" req res args))
-
-(defroute (:get "/portfolio(/(.*))?") (req res args)
-  (scrub-directory "portfolio" req res args))
-
-; (defroute (:get "/blog(/\d{4}/\d{2}/\d{2}/(.*))?") (req res args)
-(defroute (:get "/blog(/(.*))?") (req res args)
-  (scrub-directory "blog" req res args))
+(defroutescan "docs")
+(defroutescan "portfolio")
+(defroutescan "blog")
 
 (defroute (:* ".+") (req res)
-  (page-not-found res))
+  (http-status 404 res))
